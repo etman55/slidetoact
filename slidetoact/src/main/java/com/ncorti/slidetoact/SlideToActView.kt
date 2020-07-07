@@ -211,7 +211,7 @@ class SlideToActView @JvmOverloads constructor(
         set(value) {
             field = value
             if (field != 0) {
-                mDrawableTick = changeCompleteIcon(value)
+                mDrawableTick = loadAnimatedVectorDrawableCompat(value)
                 invalidate()
             }
         }
@@ -394,9 +394,9 @@ class SlideToActView @JvmOverloads constructor(
         )
 
         mDrawableTick = if (actualCompleteDrawable != 0) {
-            changeCompleteIcon(actualCompleteDrawable)
+            loadAnimatedVectorDrawableCompat(actualCompleteDrawable)
         } else {
-            changeCompleteIcon(R.drawable.slidetoact_animated_ic_check)
+            loadAnimatedVectorDrawableCompat(R.drawable.slidetoact_animated_ic_check)
         }
 
         mTextPaint.textAlign = Paint.Align.CENTER
@@ -428,7 +428,7 @@ class SlideToActView @JvmOverloads constructor(
         return VectorDrawableCompat.createFromXmlInner(res, parser, attrs, theme)
     }
 
-    private fun changeCompleteIcon(icon: Int): Drawable {
+    private fun loadAnimatedVectorDrawableCompat(icon: Int): Drawable {
         // Due to bug in the AVD implementation in the support library, we use it only for API < 21
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             context.resources.getDrawable(
